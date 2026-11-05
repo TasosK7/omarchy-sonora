@@ -33,8 +33,11 @@ already registers on the session bus.
 omarchy plugin add https://github.com/TasosK7/omarchy-sonora.git --enable
 ```
 
-Then place the **Sonora** widget from the Omarchy bar settings (category *Media*) if it
-isn't already on your bar.
+`--enable` puts the widget on your bar. To move it somewhere else, for example next to the clock:
+
+```bash
+omarchy bar move io.github.tasosk7.sonora --after omarchy.clock
+```
 
 ## Remove
 
@@ -59,13 +62,32 @@ Example in `~/.config/hypr/bindings.lua`: bind a key to `omarchy-shell sonora pl
 
 ## Settings
 
-| Setting | Default | Description |
-|---|---|---|
-| Max label width | 180 px | Width before the label scrolls |
-| Hide when not running | on | Remove the widget while Sonora is closed |
-| Show artist in the bar | on | Append the artist to the bar label |
-| Show cover art in the bar | on | Small album-art thumbnail next to the waveform |
-| Show progress line | on | Hairline playback progress under the widget |
+| Setting | Key | Default | Description |
+|---|---|---|---|
+| Max label width | `maxLabelWidth` | `180` | Width in px before the label scrolls (60–600) |
+| Hide when not running | `hideWhenUnavailable` | `true` | Remove the widget while Sonora is closed |
+| Show artist | `showArtist` | `true` | Show the artist after the title in the bar |
+| Show cover art | `showCover` | `true` | Small album-art thumbnail next to the waveform |
+| Show progress line | `showProgress` | `true` | Hairline playback progress under the widget |
+
+Change a setting with `omarchy bar set` (use `--json` so `true`/`false` and numbers keep their type):
+
+```bash
+omarchy bar set io.github.tasosk7.sonora showCover false --json
+omarchy bar set io.github.tasosk7.sonora maxLabelWidth 240 --json
+```
+
+Or edit the widget's entry in `~/.config/omarchy/shell.json` directly:
+
+```json
+{
+  "id": "io.github.tasosk7.sonora",
+  "showCover": false,
+  "maxLabelWidth": 240
+}
+```
+
+Either way the bar picks up the change immediately; no restart needed.
 
 ## License
 
