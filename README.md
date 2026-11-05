@@ -1,7 +1,7 @@
 # Sonora for Omarchy
 
 A Sonora-styled mini player for the [Omarchy](https://omarchy.org) bar, for
-[Sonora](https://aur.archlinux.org/packages/sonora-bin), the native music streaming client.
+[Sonora](https://github.com/sonorahq/sonora), the native music streaming client.
 Talks to Sonora over MPRIS (`org.mpris.MediaPlayer2.sonora`), so nothing extra is needed.
 
 ![The Sonora bar widget and its Now Playing card](preview.png)
