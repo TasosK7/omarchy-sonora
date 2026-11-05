@@ -22,11 +22,38 @@ BarWidget {
   readonly property real progress: sonora && sonora.length > 0
     ? Math.max(0, Math.min(1, sonora.position / sonora.length)) : 0
 
-  readonly property real maxLabelWidth: setting("maxLabelWidth", 180)
-  readonly property bool hideWhenUnavailable: setting("hideWhenUnavailable", true) === true
-  readonly property bool showArtist: setting("showArtist", true) === true
-  readonly property bool showCover: setting("showCover", true) === true
-  readonly property bool showProgress: setting("showProgress", true) === true
+  // The bar hands widgets their settings via `settings`, but after a plugin
+  // reload it can re-inject an outdated copy (live edits are patched into the
+  // running widget, not into the slot it is rebuilt from). The shell keeps
+  // `bar.shell.barConfig` in step with shell.json, so read our own entry from
+  // there first and fall back to the injected settings.
+  readonly property var configEntry: {
+    var cfg = bar && bar.shell ? bar.shell.barConfig : null
+    var layout = cfg && cfg.layout ? cfg.layout : null
+    if (!layout) return null
+    var regions = ["left", "center", "right"]
+    for (var r = 0; r < regions.length; r++) {
+      var entries = layout[regions[r]]
+      if (!Array.isArray(entries)) continue
+      for (var i = 0; i < entries.length; i++) {
+        var e = entries[i]
+        if (e && typeof e === "object" && e.id === moduleName) return e
+      }
+    }
+    return null
+  }
+
+  function option(name, fallback) {
+    var value = configEntry && configEntry[name] !== undefined
+      ? configEntry[name] : (settings ? settings[name] : undefined)
+    return value === undefined || value === null ? fallback : value
+  }
+
+  readonly property real maxLabelWidth: option("maxLabelWidth", 180)
+  readonly property bool hideWhenUnavailable: option("hideWhenUnavailable", true) === true
+  readonly property bool showArtist: option("showArtist", true) === true
+  readonly property bool showCover: option("showCover", true) === true
+  readonly property bool showProgress: option("showProgress", true) === true
 
   // Sonora's UI typeface is Inter; use it in the card when it's installed.
   readonly property string textFont: Qt.fontFamilies().indexOf("Inter") >= 0
