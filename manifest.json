@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "io.github.tasosk7.sonora",
+  "name": "Sonora",
+  "version": "0.1.0",
+  "author": "Tasos Kanellias",
+  "license": "MIT",
+  "description": "A Sonora-styled mini player for the bar: animated waveform, cover art, and a Now Playing card with seek, shuffle, repeat and volume, over MPRIS",
+  "kinds": [
+    "service",
+    "bar-widget"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Sonora",
+    "description": "Sonora's now-playing view in your bar: waveform, cover art, and a mini player card.",
+    "category": "Media",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "maxLabelWidth": 180,
+      "hideWhenUnavailable": true,
+      "showArtist": true,
+      "showCover": true,
+      "showProgress": true
+    },
+    "schema": [
+      {
+        "key": "maxLabelWidth",
+        "type": "integer",
+        "label": "Max label width (px)",
+        "description": "Width of the now-playing label before it scrolls.",
+        "min": 60,
+        "max": 600,
+        "step": 10,
+        "defaultValue": 180
+      },
+      {
+        "key": "hideWhenUnavailable",
+        "type": "boolean",
+        "label": "Hide when Sonora is not running",
+        "description": "Remove the widget from the bar while Sonora is closed.",
+        "defaultValue": true
+      },
+      {
+        "key": "showArtist",
+        "type": "boolean",
+        "label": "Show artist in the bar",
+        "description": "Append the artist after the track title in the bar label.",
+        "defaultValue": true
+      },
+      {
+        "key": "showCover",
+        "type": "boolean",
+        "label": "Show cover art in the bar",
+        "description": "Show a small album-art thumbnail next to the waveform.",
+        "defaultValue": true
+      },
+      {
+        "key": "showProgress",
+        "type": "boolean",
+        "label": "Show progress line",
+        "description": "Draw a hairline playback progress bar under the widget.",
+        "defaultValue": true
+      }
+    ]
+  }
+}
